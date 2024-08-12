@@ -1,5 +1,8 @@
 package com.erhan.alex
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +19,7 @@ class AddItemFragment : DialogFragment() {
     private lateinit var noteField: EditText
     private lateinit var buttonAdd: Button
 
-    var onItemAdded: ((String) -> Unit)? = null
+    var onItemAdded: ((String, Int, String) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +39,7 @@ class AddItemFragment : DialogFragment() {
             val noteT = noteField.text.toString().trim()
 
             if (nameT.isNotEmpty() and rateT.isNotEmpty() and noteT.isNotEmpty()) {
-                onItemAdded?.invoke(nameT)
+                onItemAdded?.invoke(nameT, rateT.toInt(), noteT)
                 dismiss()
             } else {
                 Toast.makeText(context, "Please enter some text", Toast.LENGTH_SHORT).show()
@@ -44,5 +47,19 @@ class AddItemFragment : DialogFragment() {
         }
 
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.85).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        return dialog
     }
 }

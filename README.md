@@ -1,12 +1,12 @@
 # TODO
 
 - Persistence lol
-	- local?
+	- ~~local~~ Done.
 	- firebase storage?
 - Use custom image for entries
 	- camera permissions
 - Icon for fab
 - interactible list elements
-	- details
+	- ~~details~~ Done.
 	- edit
 	- delete

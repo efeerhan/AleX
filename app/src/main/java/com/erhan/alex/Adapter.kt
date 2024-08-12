@@ -1,16 +1,20 @@
 package com.erhan.alex
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class Adapter(private val itemList: List<entry>, private val context: Context) :
+
+class Adapter( private val context: Context) :
     RecyclerView.Adapter<Adapter.ListViewHolder>() {
+
+    private var entries = emptyList<Entry>()
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
@@ -23,19 +27,27 @@ class Adapter(private val itemList: List<entry>, private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val currentItem = itemList[position]
-//        holder.imageView.setImageResource(currentItem.pic)
+        val currentItem = entries[position]
+//      SET IMAGE HERE!
         holder.imageView.setImageResource(R.drawable.dario)
         holder.textView.text = currentItem.name
 
         holder.itemView.setOnClickListener {
-            val text = "ballsack!"
-            val duration = Toast.LENGTH_SHORT
-
-            val toast = Toast.makeText(context, text, duration) // in Activity
-            toast.show()
+            var bundle = Bundle()
+            bundle.putString("name", currentItem.name)
+            bundle.putString("date", currentItem.date)
+            bundle.putString("rating", currentItem.rating.toString())
+            bundle.putString("notes", currentItem.notes)
+            val viewItemFragment = ViewItemFragment()
+            viewItemFragment.arguments = bundle
+            viewItemFragment.show((context as AppCompatActivity).supportFragmentManager, "ViewItemFragment")
         }
     }
 
-    override fun getItemCount() = itemList.size
+    fun setEntries(newEntries: List<Entry>) {
+        entries = newEntries
+        notifyDataSetChanged() // Use DiffUtil for better performance
+    }
+
+    override fun getItemCount() = entries.size
 }
