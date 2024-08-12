@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AleX</string>
+    <string name="welcome">Hey, Alex!</string>
+    <string name="descPlaceholder">h</string>
+    <string name="nameHint">What beer did you just drink?</string>
+    <string name="rateHint">Rating?</string>
+    <string name="notesHint">Notes?</string>
+    <string name="done">Done!</string>
+</resources>
