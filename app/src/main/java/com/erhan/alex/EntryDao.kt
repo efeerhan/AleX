@@ -15,12 +15,12 @@ interface EntryDao {
     @Query("SELECT MAX(pic) FROM Entries")
     fun getMaxPic(): Int
 
-    @Update
-    fun update(entry: Entry)
+    @Query("UPDATE Entries SET name=:newName,rating=:newRating, notes=:newNotes WHERE name == :oldName")
+    fun update(oldName: String, newName: String, newRating: String, newNotes: String)
 
     @Insert
     fun insertAll(vararg users: Entry)
 
-    @Delete
-    fun delete(user: Entry)
+    @Query("DELETE FROM Entries WHERE name == :name")
+    fun delete(name: String)
 }

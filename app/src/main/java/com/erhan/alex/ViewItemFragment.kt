@@ -29,6 +29,7 @@ class ViewItemFragment : DialogFragment() {
 
         nameField = view.findViewById(R.id.nameView)
         nameField.text = arguments?.getString("name")
+        val name = arguments?.getString("name")
 
         dateField = view.findViewById(R.id.dateView)
         dateField.text = arguments?.getString("date")
@@ -43,25 +44,28 @@ class ViewItemFragment : DialogFragment() {
         buttonDelete = view.findViewById(R.id.deleteButton)
 
         buttonEdit.setOnClickListener {
-//            val editItemFragment = AddItemFragment()
-//            editItemFragment.onItemAdded = { nameT, rateT, noteT ->
-//                editItem(nameT, rateT, noteT)
-//            }
-//            activity?.let { it1 -> editItemFragment.show(it1.supportFragmentManager, "AddItemFragment") }
+            val editItemFragment = AddItemFragment()
+            editItemFragment.onItemAdded = { nameT, rateT, noteT ->
+                if (name != null) {
+                    editItem(name, nameT, rateT.toString(), noteT)
+                }
+            }
+            activity?.let { it1 -> editItemFragment.show(it1.supportFragmentManager, "AddItemFragment") }
         }
         buttonDelete.setOnClickListener {
-            val ysf: YouSureFragment = YouSureFragment()
-
-            activity?.let { it1 -> ysf.show(it1.supportFragmentManager, "AddItemFragment") }
+            val ysf = YouSureFragment()
+            val bundle = Bundle()
+            bundle.putString("name", (arguments?.getString("name") as String))
+            ysf.arguments = bundle
+            activity?.let { it1 -> ysf.show(it1.supportFragmentManager, "YouSureFragment") }
         }
 
         return view
     }
 
-    private fun editItem(entry: Entry, newName: String, newRating: Int, newNotes: String) {
+    private fun editItem(name: String, newName: String, newRating: String, newNotes: String) {
         val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
-        val updatedEntry = entry.copy(name = "Updated Item")
-        entryViewModel.update(updatedEntry)
+        entryViewModel.update(name, newName, newRating, newNotes)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

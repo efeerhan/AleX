@@ -9,4 +9,6 @@
 - interactible list elements
 	- ~~details~~ Done.
 	- edit
-	- delete
+		- Update photo
+		- Primary Key constraint violation handling (for add as well)
+	- ~~delete~~ Done.

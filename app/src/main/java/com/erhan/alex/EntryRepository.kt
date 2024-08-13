@@ -9,7 +9,11 @@ class EntryRepository(private val entryDao: EntryDao) {
         entryDao.insertAll(entry)
     }
 
-    fun update(entry: Entry) {
-        entryDao.update(entry)
+    fun update(oldName: String, newName: String, newRating: String, newNotes: String) {
+        entryDao.update(oldName, newName, newRating, newNotes)
+    }
+
+    fun delete(name: String) {
+        entryDao.delete(name)
     }
 }
