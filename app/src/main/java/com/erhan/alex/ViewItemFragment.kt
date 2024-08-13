@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 
 class ViewItemFragment : DialogFragment() {
 
@@ -42,13 +43,25 @@ class ViewItemFragment : DialogFragment() {
         buttonDelete = view.findViewById(R.id.deleteButton)
 
         buttonEdit.setOnClickListener {
-
+//            val editItemFragment = AddItemFragment()
+//            editItemFragment.onItemAdded = { nameT, rateT, noteT ->
+//                editItem(nameT, rateT, noteT)
+//            }
+//            activity?.let { it1 -> editItemFragment.show(it1.supportFragmentManager, "AddItemFragment") }
         }
         buttonDelete.setOnClickListener {
+            val ysf: YouSureFragment = YouSureFragment()
 
+            activity?.let { it1 -> ysf.show(it1.supportFragmentManager, "AddItemFragment") }
         }
 
         return view
+    }
+
+    private fun editItem(entry: Entry, newName: String, newRating: Int, newNotes: String) {
+        val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
+        val updatedEntry = entry.copy(name = "Updated Item")
+        entryViewModel.update(updatedEntry)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

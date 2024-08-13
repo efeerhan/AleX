@@ -8,4 +8,8 @@ class EntryRepository(private val entryDao: EntryDao) {
     fun insert(entry: Entry) {
         entryDao.insertAll(entry)
     }
+
+    fun update(entry: Entry) {
+        entryDao.update(entry)
+    }
 }

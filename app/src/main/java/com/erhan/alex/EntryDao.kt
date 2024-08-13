@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface EntryDao {
@@ -13,6 +14,9 @@ interface EntryDao {
 
     @Query("SELECT MAX(pic) FROM Entries")
     fun getMaxPic(): Int
+
+    @Update
+    fun update(entry: Entry)
 
     @Insert
     fun insertAll(vararg users: Entry)

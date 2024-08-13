@@ -25,7 +25,8 @@
             android:fontFamily="@font/ps"
             android:text="@string/welcome"
             android:textAlignment="center"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:elevation="8dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle"
