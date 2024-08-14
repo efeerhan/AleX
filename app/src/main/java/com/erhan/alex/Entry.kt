@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity (tableName = "Entries")
 data class Entry (
-    @PrimaryKey var name: String,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    var name: String,
     var date: String,
     var rating: Int,
     var notes: String,

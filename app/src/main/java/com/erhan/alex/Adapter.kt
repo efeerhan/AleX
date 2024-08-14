@@ -1,6 +1,7 @@
 package com.erhan.alex
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import java.io.File
 
 
 class Adapter( private val context: Context) :
@@ -28,16 +30,18 @@ class Adapter( private val context: Context) :
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val currentItem = entries[position]
-//      SET IMAGE HERE!
-        holder.imageView.setImageResource(R.drawable.dario)
+        val file = File(context.filesDir?.path, "images").resolve("IMG_"+currentItem.pic+".jpg")
+        holder.imageView.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
         holder.textView.text = currentItem.name
 
         holder.itemView.setOnClickListener {
-            var bundle = Bundle()
+            val bundle = Bundle()
+            bundle.putInt("id", currentItem.id)
             bundle.putString("name", currentItem.name)
             bundle.putString("date", currentItem.date)
-            bundle.putString("rating", currentItem.rating.toString())
+            bundle.putInt("rating", currentItem.rating)
             bundle.putString("notes", currentItem.notes)
+            bundle.putInt("pic", currentItem.pic)
             val viewItemFragment = ViewItemFragment()
             viewItemFragment.arguments = bundle
             viewItemFragment.show((context as AppCompatActivity).supportFragmentManager, "ViewItemFragment")

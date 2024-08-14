@@ -24,7 +24,7 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
         repository.update(oldName, newName, newRating, newNotes)
     }
 
-    fun delete(name: String) = viewModelScope.launch {
-        repository.delete(name)
+    fun delete(id: Int) = viewModelScope.launch {
+        repository.delete(id)
     }
 }

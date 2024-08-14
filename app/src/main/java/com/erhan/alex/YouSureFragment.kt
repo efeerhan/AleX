@@ -28,9 +28,9 @@ class YouSureFragment : DialogFragment() {
         buttonNo = view.findViewById(R.id.noButton)
 
         buttonYes.setOnClickListener {
-            val name = arguments?.getString("name")
-            if (name != null) {
-                deleteItem(name)
+            val id = arguments?.getInt("id")
+            if (id != null) {
+                deleteItem(id)
             }
             parentFragmentManager.apply {
                 findFragmentByTag("YouSureFragment")?.let {
@@ -49,9 +49,9 @@ class YouSureFragment : DialogFragment() {
         return view
     }
 
-    private fun deleteItem(name: String) {
+    private fun deleteItem(id: Int) {
         val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
-        entryViewModel.delete(name)
+        entryViewModel.delete(id)
     }
 
     override fun onStart() {

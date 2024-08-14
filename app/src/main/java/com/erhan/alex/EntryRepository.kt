@@ -13,7 +13,7 @@ class EntryRepository(private val entryDao: EntryDao) {
         entryDao.update(oldName, newName, newRating, newNotes)
     }
 
-    fun delete(name: String) {
-        entryDao.delete(name)
+    fun delete(id: Int) {
+        entryDao.delete(id)
     }
 }

@@ -1,10 +1,13 @@
 package com.erhan.alex
 
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -57,6 +60,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addItem(dao: EntryDao, name: String, rating: Int, notes: String) {
-        entryViewModel.insert(Entry(name, SimpleDateFormat("MM/dd/yyyy", Locale.US).format(Calendar.getInstance().time), rating, notes, dao.getMaxPic()+1))
+        val maxPic = dao.getMaxPic()
+        val newPic: Int = if ( dao.getCount() == 0 ) {
+            0
+        } else {
+            maxPic+1
+        }
+        entryViewModel.insert(Entry(
+            name = name,
+            date = SimpleDateFormat("MM/dd/yyyy", Locale.US).format(Calendar.getInstance().time),
+            rating = rating,
+            notes = notes,
+            pic = newPic))
+        Log.i("entryadded","Added entry $name $rating $notes $newPic")
     }
 }
