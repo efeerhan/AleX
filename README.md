@@ -6,7 +6,7 @@
 	- ~~camera permissions~~ Done.
 	- Delete unused image files
 - ~~Icon for fab~~ Done.
-- interactible list elements
+- ~~interactible list elements~~
 	- ~~details~~ Done.
 	- ~~edit~~ Done.
 		- ~~Update photo~~ Done.
