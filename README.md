@@ -12,7 +12,7 @@
 		- ~~Update photo~~ Done.
 		- ~~Primary Key constraint violation handling (for add as well)~~ Done.
 	- ~~delete~~ Done.
-- Prettier UI Done.
+- ~~Prettier UI Done.~~
 	- ~~ViewItem fragment~~ Done.
 	- ~~Colors~~ Done.
 	- ~~Splash screen~~ Done.
