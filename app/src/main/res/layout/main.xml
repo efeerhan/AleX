@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/main_back">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="48dp"
         android:layout_marginEnd="12dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,11 +22,25 @@
         <TextView
             android:id="@+id/hello"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
             android:fontFamily="@font/ps"
             android:text="@string/welcome"
             android:textAlignment="center"
-            android:textSize="36sp"
+            android:textColor="@color/white"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/howMany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/ps"
+            android:textColor="@color/white"
+            android:text="@string/descPlaceholder"
+            android:textAlignment="center"
+            android:textSize="20sp"
             android:elevation="8dp"/>
 
         <androidx.recyclerview.widget.RecyclerView

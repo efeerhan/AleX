@@ -35,20 +35,21 @@ class ViewItemFragment : DialogFragment() {
         val file = File(context?.filesDir?.path, "images").resolve("IMG_"+arguments?.getInt("pic")+".jpg")
         imageField.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
 
-        nameField = view.findViewById(R.id.nameView)
         val name = arguments?.getString("name")
-        nameField.text = name
 
         dateField = view.findViewById(R.id.dateView)
-        dateField.text = arguments?.getString("date")
+        val dateText = getString(R.string.viewDatePrefix)+" "+arguments?.getString("date")
+        dateField.text = dateText
 
         rateField = view.findViewById(R.id.rateView)
         val rating = arguments?.getInt("rating")
-        rateField.text = rating.toString()
+        val ratingText = getString(R.string.viewRatingPrefix)+" "+rating.toString()
+        rateField.text = ratingText
 
         noteField = view.findViewById(R.id.noteView)
         val notes = arguments?.getString("notes")
-        noteField.text = notes
+        val notesText = "\""+notes+"\""
+        noteField.text = notesText
 
         val pic = arguments?.getInt("pic")
 

@@ -6,9 +6,11 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,12 +32,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
-        this.window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+
+        WindowCompat.setDecorFitsSystemWindows(
+            window,
+            false
+        )
 
         dario = BitmapFactory.decodeResource(resources, R.drawable.dario)
 
         val db by lazy { AppDatabase.getDatabase(this) }
         val dao = db.entryDao()
+
+        val howMany = "You've had "+dao.getCount().toString()+" unique brewskis."
+        val howManyView: TextView = findViewById(R.id.howMany)
+        howManyView.text = howMany
+
 
         entryAdapter = Adapter(this)
 
@@ -73,5 +84,8 @@ class MainActivity : AppCompatActivity() {
             notes = notes,
             pic = newPic))
         Log.i("entryadded","Added entry $name $rating $notes $newPic")
+        val howMany = "You've had "+dao.getCount().toString()+" unique brewskis."
+        val howManyView: TextView = findViewById(R.id.howMany)
+        howManyView.text = howMany
     }
 }

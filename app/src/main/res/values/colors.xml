@@ -3,5 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="border_grey">#C2C4C4</color>
-    <color name="fab_blue">#58889B</color>
+<!--    <color name="fab_blue">#58889B</color>-->
+    <color name="fab_blue">#788DCC</color>
+<!--    <color name="main_back">#38827b</color>-->
+    <color name="main_back">#169873</color>
 </resources>

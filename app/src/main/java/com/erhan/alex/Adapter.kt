@@ -33,6 +33,7 @@ class Adapter( private val context: Context) :
         val file = File(context.filesDir?.path, "images").resolve("IMG_"+currentItem.pic+".jpg")
         holder.imageView.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
         holder.textView.text = currentItem.name
+        holder.textView.textSize = 24f
 
         holder.itemView.setOnClickListener {
             val bundle = Bundle()

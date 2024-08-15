@@ -13,6 +13,7 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:layout_gravity="center"
+        android:layout_marginTop="24dp"
         android:text="@string/youSurePrompt"
         android:fontFamily="@font/ps"/>
 

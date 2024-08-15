@@ -2,9 +2,9 @@
     <string name="app_name">AleX</string>
     <string name="welcome">Hey, Alex!</string>
     <string name="descPlaceholder">h</string>
-    <string name="nameHint">name?</string>
-    <string name="rateHint">Rating?</string>
-    <string name="notesHint">Notes?</string>
+    <string name="nameHint">Name?</string>
+    <string name="rateHint">What would you rate it?</string>
+    <string name="notesHint">Any other notes?</string>
     <string name="done">Done!</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete :(</string>
@@ -12,4 +12,8 @@
     <string name="no">No</string>
     <string name="youSurePrompt">Bruh are you sure you want to delete this entry?</string>
     <string name="youSurePrompt2">You will never be able to recover it…</string>
+
+    <string name="viewDatePrefix">Date recorded: </string>
+    <string name="viewRatingPrefix">You rated this: </string>
+    <string name="viewNotes">Your notes: </string>
 </resources>

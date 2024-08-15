@@ -8,10 +8,12 @@
     
     <ImageView
         android:id="@+id/imageField"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:contentDescription="@string/descPlaceholder"
-        android:src="@drawable/dario"/>
+        android:src="@drawable/add_image"/>
 
     <EditText
         android:id="@+id/nameField"
@@ -19,6 +21,7 @@
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/nameHint"
+        android:fontFamily="@font/ps"
         android:inputType="text" />
 
     <EditText
@@ -27,7 +30,8 @@
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/rateHint"
-        android:inputType="text" />
+        android:fontFamily="@font/ps"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/noteField"
@@ -35,6 +39,7 @@
         android:layout_height="72dp"
         android:autofillHints=""
         android:hint="@string/notesHint"
+        android:fontFamily="@font/ps"
         android:inputType="text" />
 
     <Button
