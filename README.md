@@ -18,3 +18,4 @@
 	- ~~Splash screen~~ Done.
 	- ~~Spacing~~ Done.
 - ~~Info in header under Hey Alex!~~ Done.
+
