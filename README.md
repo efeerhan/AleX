@@ -1,23 +1,23 @@
 # TODO
 - Persistence lol
-	- ~~local~~ Done.
+	- ~~local~~
 	- firebase storage?
 - Use custom image for entries
-	- ~~camera permissions~~ Done.
+	- ~~camera permissions~~
 	- Delete unused image files
-- ~~Icon for fab~~ Done.
-- ~~interactible list elements~~ Done.
-	- ~~details~~ Done.
-	- ~~edit~~ Done.
-		- ~~Update photo~~ Done.
-		- ~~Primary Key constraint violation handling (for add as well)~~ Done.
-	- ~~delete~~ Done.
-- ~~Prettier UI Done.~~
-	- ~~ViewItem fragment~~ Done.
-	- ~~Colors~~ Done.
-	- ~~Splash screen~~ Done.
-	- ~~Spacing~~ Done.
-- ~~Info in header under Hey Alex!~~ Done.
+- ~~Icon for fab~~
+- ~~interactible list elements~~
+	- ~~details~~
+	- ~~edit~~
+		- ~~Update photo~~
+		- ~~Primary Key constraint violation handling (for add as well)~~
+	- ~~delete~~
+- ~~Prettier UI~~
+	- ~~ViewItem fragment~~
+	- ~~Colors~~
+	- ~~Splash screen~~
+	- ~~Spacing~~
+- ~~Info in header under Hey Alex!~~
 - Spacing for multi line textviews
 - Date selection
 
