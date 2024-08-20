@@ -33,13 +33,15 @@ import java.nio.file.Paths
 class AddItemFragment : DialogFragment() {
 
     private lateinit var nameField: EditText
+    private lateinit var whereField: EditText
+    private lateinit var kindField: EditText
     private lateinit var rateField: EditText
     private lateinit var noteField: EditText
     private lateinit var buttonAdd: Button
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private val cameraRequestCode = 101
 
-    var onItemAdded: ((String, Int, String) -> Unit)? = null
+    var onItemAdded: ((String, String, String, Int, String) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +51,8 @@ class AddItemFragment : DialogFragment() {
 
         val imageField: ImageView = view.findViewById(R.id.imageField)
         nameField = view.findViewById(R.id.nameField)
+        whereField = view.findViewById(R.id.whereField)
+        kindField = view.findViewById(R.id.kindField)
         rateField = view.findViewById(R.id.rateField)
         noteField = view.findViewById(R.id.noteField)
 
@@ -57,9 +61,13 @@ class AddItemFragment : DialogFragment() {
             val file = File(context?.filesDir?.path, "images").resolve("IMG_$picInt.jpg")
             imageField.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
             val name = arguments?.getString("name")
+            val where = arguments?.getString("where")
+            val kind = arguments?.getString("kind")
             val rating = arguments?.getInt("rating")
             val notes = arguments?.getString("notes")
             nameField.setText(name)
+            whereField.setText(where)
+            kindField.setText(kind)
             rateField.setText(rating.toString())
             noteField.setText(notes)
         }
@@ -68,11 +76,13 @@ class AddItemFragment : DialogFragment() {
 
         buttonAdd.setOnClickListener {
             val nameT = nameField.text.toString().trim()
+            val whereT = whereField.text.toString().trim()
+            val kindT = kindField.text.toString().trim()
             val rateT = rateField.text.toString().trim()
             val noteT = noteField.text.toString().trim()
 
-            if (nameT.isNotEmpty() and rateT.isNotEmpty() and noteT.isNotEmpty()) {
-                onItemAdded?.invoke(nameT, rateT.toInt(), noteT)
+            if (nameT.isNotEmpty() and whereT.isNotEmpty() and kindT.isNotEmpty() and rateT.isNotEmpty() and noteT.isNotEmpty()) {
+                onItemAdded?.invoke(nameT, whereT, kindT, rateT.toInt(), noteT)
                 if ( picInt != null ) {
                     parentFragmentManager.apply {
                         findFragmentByTag("AddItemFragment")?.let {

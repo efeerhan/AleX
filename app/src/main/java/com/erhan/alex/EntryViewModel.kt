@@ -20,8 +20,8 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
         repository.insert(entry)
     }
 
-    fun update(oldName: String, newName: String, newRating: String, newNotes: String)  = viewModelScope.launch {
-        repository.update(oldName, newName, newRating, newNotes)
+    fun update(id: Int, newName: String, newWhere: String, newKind: String, newRating: Int, newNotes: String, newDate: String)  = viewModelScope.launch {
+        repository.update(id, newName, newWhere, newKind, newRating, newNotes, newDate)
     }
 
     fun delete(id: Int) = viewModelScope.launch {

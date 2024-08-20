@@ -39,6 +39,8 @@ class Adapter( private val context: Context) :
             val bundle = Bundle()
             bundle.putInt("id", currentItem.id)
             bundle.putString("name", currentItem.name)
+            bundle.putString("where", currentItem.bwhere)
+            bundle.putString("kind", currentItem.kind)
             bundle.putString("date", currentItem.date)
             bundle.putInt("rating", currentItem.rating)
             bundle.putString("notes", currentItem.notes)

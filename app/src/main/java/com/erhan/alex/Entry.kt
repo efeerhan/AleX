@@ -8,6 +8,8 @@ import androidx.room.PrimaryKey
 data class Entry (
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var name: String,
+    var bwhere: String,
+    var kind: String,
     var date: String,
     var rating: Int,
     var notes: String,

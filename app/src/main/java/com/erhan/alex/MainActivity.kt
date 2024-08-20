@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val db by lazy { AppDatabase.getDatabase(this) }
         val dao = db.entryDao()
 
-        val howMany = "You've had "+dao.getCount().toString()+" unique brewskis."
+        val howMany = "You've had "+dao.getCount().toString()+" brewskis."
         val howManyView: TextView = findViewById(R.id.howMany)
         howManyView.text = howMany
 
@@ -63,14 +63,14 @@ class MainActivity : AppCompatActivity() {
         fab = findViewById(R.id.fab)
         fab.setOnClickListener {
             val addItemFragment = AddItemFragment()
-            addItemFragment.onItemAdded = { nameT, rateT, noteT ->
-                addItem(dao, nameT, rateT, noteT)
+            addItemFragment.onItemAdded = { nameT, whereT, kindT, rateT, noteT ->
+                addItem(dao, nameT, whereT, kindT, rateT, noteT)
             }
             addItemFragment.show(supportFragmentManager, "AddItemFragment")
         }
     }
 
-    private fun addItem(dao: EntryDao, name: String, rating: Int, notes: String) {
+    private fun addItem(dao: EntryDao, name: String, where: String, kind: String, rating: Int, notes: String) {
         val maxPic = dao.getMaxPic()
         val newPic: Int = if ( dao.getCount() == 0 ) {
             0
@@ -79,6 +79,8 @@ class MainActivity : AppCompatActivity() {
         }
         entryViewModel.insert(Entry(
             name = name,
+            bwhere = where,
+            kind = kind,
             date = SimpleDateFormat("MM/dd/yyyy", Locale.US).format(Calendar.getInstance().time),
             rating = rating,
             notes = notes,

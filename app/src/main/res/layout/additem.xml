@@ -22,6 +22,27 @@
         android:autofillHints=""
         android:hint="@string/nameHint"
         android:fontFamily="@font/ps"
+        android:textColor="@color/black"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/whereField"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:hint="@string/whereHint"
+        android:fontFamily="@font/ps"
+        android:textColor="@color/black"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/kindField"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:hint="@string/kindHint"
+        android:fontFamily="@font/ps"
+        android:textColor="@color/black"
         android:inputType="text" />
 
     <EditText
@@ -31,6 +52,7 @@
         android:autofillHints=""
         android:hint="@string/rateHint"
         android:fontFamily="@font/ps"
+        android:textColor="@color/black"
         android:inputType="number" />
 
     <EditText
@@ -40,6 +62,7 @@
         android:autofillHints=""
         android:hint="@string/notesHint"
         android:fontFamily="@font/ps"
+        android:textColor="@color/black"
         android:inputType="text" />
 
     <Button

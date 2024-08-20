@@ -18,8 +18,8 @@ interface EntryDao {
     @Query("SELECT COUNT(name) FROM Entries")
     fun getCount(): Int
 
-    @Query("UPDATE Entries SET name=:newName,rating=:newRating, notes=:newNotes WHERE name == :oldName")
-    fun update(oldName: String, newName: String, newRating: String, newNotes: String)
+    @Query("UPDATE Entries SET name=:newName,bwhere=:newWhere,kind=:newKind,rating=:newRating,notes=:newNotes,date=:newDate WHERE id == :id")
+    fun update(id: Int, newName: String, newWhere: String, newKind: String, newRating: Int, newNotes: String, newDate: String)
 
     @Insert
     fun insertAll(vararg users: Entry)

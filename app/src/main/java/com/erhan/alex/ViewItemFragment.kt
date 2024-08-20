@@ -19,6 +19,8 @@ class ViewItemFragment : DialogFragment() {
 
     private lateinit var imageField: ImageView
     private lateinit var nameField: TextView
+    private lateinit var whereField: TextView
+    private lateinit var kindField: TextView
     private lateinit var dateField: TextView
     private lateinit var rateField: TextView
     private lateinit var noteField: TextView
@@ -36,6 +38,16 @@ class ViewItemFragment : DialogFragment() {
         imageField.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
 
         val name = arguments?.getString("name")
+
+        whereField = view.findViewById(R.id.whereView)
+        val whereText = getString(R.string.viewWherePrefix)+" "+arguments?.getString("where")
+        val where = arguments?.getString("where")
+        whereField.text = whereText
+
+        kindField = view.findViewById(R.id.kindView)
+        val kindText = getString(R.string.viewKindPrefix)+" "+arguments?.getString("kind")
+        val kind = arguments?.getString("kind")
+        kindField.text = kindText
 
         dateField = view.findViewById(R.id.dateView)
         val dateText = getString(R.string.viewDatePrefix)+" "+arguments?.getString("date")
@@ -60,6 +72,8 @@ class ViewItemFragment : DialogFragment() {
             val editItemFragment = AddItemFragment()
             val bundleEdit = Bundle()
             bundleEdit.putString("name", name)
+            bundleEdit.putString("where", where)
+            bundleEdit.putString("kind", kind)
             if (rating != null) {
                 bundleEdit.putInt("rating", rating)
             }
@@ -68,9 +82,9 @@ class ViewItemFragment : DialogFragment() {
                 bundleEdit.putInt("pic", pic)
             }
             editItemFragment.arguments = bundleEdit
-            editItemFragment.onItemAdded = { nameT, rateT, noteT ->
+            editItemFragment.onItemAdded = { nameT, whereT, kindT, rateT, noteT ->
                 if (name != null) {
-                    editItem(name, nameT, rateT.toString(), noteT)
+                    editItem(nameT, whereT, kindT, rateT, noteT, "temporary")
                 }
             }
             activity?.let { it1 -> editItemFragment.show(it1.supportFragmentManager, "AddItemFragment") }
@@ -86,9 +100,12 @@ class ViewItemFragment : DialogFragment() {
         return view
     }
 
-    private fun editItem(name: String, newName: String, newRating: String, newNotes: String) {
+    private fun editItem(newName: String, newWhere: String, newKind: String, newRating: Int, newNotes: String, newDate: String) {
         val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
-        entryViewModel.update(name, newName, newRating, newNotes)
+        val id = arguments?.getInt("id")
+        if (id != null) {
+            entryViewModel.update(id, newName, newWhere, newKind, newRating, newNotes, "temporary")
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

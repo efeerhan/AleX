@@ -9,8 +9,8 @@ class EntryRepository(private val entryDao: EntryDao) {
         entryDao.insertAll(entry)
     }
 
-    fun update(oldName: String, newName: String, newRating: String, newNotes: String) {
-        entryDao.update(oldName, newName, newRating, newNotes)
+    fun update(id: Int, newName: String, newWhere: String, newKind: String, newRating: Int, newNotes: String, newDate: String) {
+        entryDao.update(id, newName, newWhere, newKind, newRating, newNotes, newDate)
     }
 
     fun delete(id: Int) {

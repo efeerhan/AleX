@@ -15,11 +15,10 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:orientation="vertical"
-        android:gravity="start"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="96dp">
+        android:layout_marginBottom="16dp">
 
         <TextView
             android:id="@+id/dateView"
@@ -27,6 +26,26 @@
             android:layout_weight="1"
             android:layout_height="0dp"
             android:text="@string/viewDatePrefix"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="@font/ps"/>
+
+        <TextView
+            android:id="@+id/whereView"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:text="@string/viewWherePrefix"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="@font/ps"/>
+
+        <TextView
+            android:id="@+id/kindView"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:text="@string/viewKindPrefix"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:fontFamily="@font/ps"/>

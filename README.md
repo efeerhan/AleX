@@ -18,4 +18,6 @@
 	- ~~Splash screen~~ Done.
 	- ~~Spacing~~ Done.
 - ~~Info in header under Hey Alex!~~ Done.
+- Spacing for multi line textviews
+- Date selection
 
