@@ -13,6 +13,7 @@ Well, I've got the solution for you. And I love you so much!
 - Spacing for multi line textviews
 - firebase storage?
 - Default image when none found
+- Export to .csv
 
 - ~~Local persistence~~
 - ~~Use custom image for entries~~
