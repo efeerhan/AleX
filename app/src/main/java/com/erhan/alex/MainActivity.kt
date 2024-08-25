@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var hello: TextView
     private lateinit var entryViewModel: EntryViewModel
     private lateinit var entryAdapter: Adapter
     private lateinit var fab: FloatingActionButton
@@ -34,10 +35,27 @@ class MainActivity : AppCompatActivity() {
         val db by lazy { AppDatabase.getDatabase(this) }
         val dao = db.entryDao()
 
-        val howMany = "You've had "+dao.getCount().toString()+" brewskis."
+        val howMany = "You've logged "+dao.getCount().toString()+" brewskis."
         val howManyView: TextView = findViewById(R.id.howMany)
         howManyView.text = howMany
 
+        hello = findViewById(R.id.hello)
+        val names: Array<String> = arrayOf(
+            "Alex",
+            "Alexandra",
+            "darling",
+            "sweetheart",
+            "cutie",
+            "my love",
+            "sweet cheeks",
+            "pretty girl",
+            "beautiful",
+            "hot stuff",
+            "\uD83C\uDF51"
+        )
+        val randInt = (0..10).random()
+        val welcome = "Hey, "+names[randInt]+"!"
+        hello.text = welcome
 
         entryAdapter = Adapter(this)
 
@@ -76,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             notes = notes,
             pic = newPic))
         Log.i("entryadded","Added entry $name $date $notes $newPic")
-        val howMany = "You've had "+dao.getCount().toString()+" brewskis."
+        val howMany = "You've logged "+dao.getCount().toString()+" brewskis."
         val howManyView: TextView = findViewById(R.id.howMany)
         howManyView.text = howMany
     }

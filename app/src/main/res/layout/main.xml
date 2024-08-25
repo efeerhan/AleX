@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:elevation="8dp"
             android:fontFamily="@font/ps"
-            android:text="@string/welcome"
+            android:text="@string/hey"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="36sp" />
