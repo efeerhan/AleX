@@ -31,6 +31,7 @@ class Adapter( private val context: Context) :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val currentItem = entries[position]
         val file = File(context.filesDir?.path, "images").resolve("IMG_"+currentItem.pic+".jpg")
+
         holder.imageView.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
         holder.textView.text = currentItem.name
         holder.textView.textSize = 24f
@@ -42,7 +43,6 @@ class Adapter( private val context: Context) :
             bundle.putString("where", currentItem.bwhere)
             bundle.putString("kind", currentItem.kind)
             bundle.putString("date", currentItem.date)
-            bundle.putInt("rating", currentItem.rating)
             bundle.putString("notes", currentItem.notes)
             bundle.putInt("pic", currentItem.pic)
             val viewItemFragment = ViewItemFragment()
@@ -52,7 +52,7 @@ class Adapter( private val context: Context) :
     }
 
     fun setEntries(newEntries: List<Entry>) {
-        entries = newEntries
+        entries = newEntries.sortedBy { it.date }
         notifyDataSetChanged() // Use DiffUtil for better performance
     }
 

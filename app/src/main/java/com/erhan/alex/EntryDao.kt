@@ -12,14 +12,17 @@ interface EntryDao {
     @Query("SELECT * FROM Entries")
     fun getAll(): LiveData<List<Entry>>
 
+    @Query("SELECT pic FROM Entries WHERE id==:id")
+    fun getPicByID(id: Int): Int
+
     @Query("SELECT MAX(pic) FROM Entries")
     fun getMaxPic(): Int
 
     @Query("SELECT COUNT(name) FROM Entries")
     fun getCount(): Int
 
-    @Query("UPDATE Entries SET name=:newName,bwhere=:newWhere,kind=:newKind,rating=:newRating,notes=:newNotes,date=:newDate WHERE id == :id")
-    fun update(id: Int, newName: String, newWhere: String, newKind: String, newRating: Int, newNotes: String, newDate: String)
+    @Query("UPDATE Entries SET name=:newName,bwhere=:newWhere,kind=:newKind,notes=:newNotes,date=:newDate WHERE id == :id")
+    fun update(id: Int, newName: String, newWhere: String, newKind: String, newNotes: String, newDate: String)
 
     @Insert
     fun insertAll(vararg users: Entry)

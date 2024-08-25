@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import java.io.File
 
 class YouSureFragment : DialogFragment() {
 
@@ -52,10 +53,12 @@ class YouSureFragment : DialogFragment() {
     }
 
     private fun deleteItem(id: Int) {
-        val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
-        entryViewModel.delete(id)
         val db = AppDatabase.getDatabase(requireContext().applicationContext)
         val dao = db.entryDao()
+        val file = File(context?.filesDir?.path, "images").resolve("IMG_"+dao.getPicByID(id).toString()+".jpg")
+        file.delete()
+        val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
+        entryViewModel.delete(id)
         val howMany = "You've had "+dao.getCount().toString()+" unique brewskis."
         val howManyView: TextView? = activity?.findViewById<TextView>(R.id.howMany)
         howManyView?.text = howMany

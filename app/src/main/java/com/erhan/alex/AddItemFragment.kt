@@ -1,6 +1,7 @@
 package com.erhan.alex
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,24 +26,29 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import org.w3c.dom.Text
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class AddItemFragment : DialogFragment() {
 
     private lateinit var nameField: EditText
     private lateinit var whereField: EditText
     private lateinit var kindField: EditText
-    private lateinit var rateField: EditText
+    private lateinit var dateField: TextView
+    private lateinit var calImage: ImageView
     private lateinit var noteField: EditText
     private lateinit var buttonAdd: Button
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private val cameraRequestCode = 101
 
-    var onItemAdded: ((String, String, String, Int, String) -> Unit)? = null
+    var onItemAdded: ((String, String, String, String, String) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,9 +60,19 @@ class AddItemFragment : DialogFragment() {
         nameField = view.findViewById(R.id.nameField)
         whereField = view.findViewById(R.id.whereField)
         kindField = view.findViewById(R.id.kindField)
-        rateField = view.findViewById(R.id.rateField)
+        dateField = view.findViewById(R.id.dateField)
+        calImage = view.findViewById(R.id.calImage)
         noteField = view.findViewById(R.id.noteField)
 
+        dateField.setOnClickListener{
+            showDatePickerDialog(dateField)
+        }
+
+        calImage.setOnClickListener{
+            showDatePickerDialog(dateField)
+        }
+
+        // If editing
         val picInt = arguments?.getInt("pic")
         if ( picInt != null ) {
             val file = File(context?.filesDir?.path, "images").resolve("IMG_$picInt.jpg")
@@ -63,13 +80,17 @@ class AddItemFragment : DialogFragment() {
             val name = arguments?.getString("name")
             val where = arguments?.getString("where")
             val kind = arguments?.getString("kind")
-            val rating = arguments?.getInt("rating")
+            val date = arguments?.getString("date")
             val notes = arguments?.getString("notes")
             nameField.setText(name)
             whereField.setText(where)
             kindField.setText(kind)
-            rateField.setText(rating.toString())
+            dateField.text = date
             noteField.setText(notes)
+        }
+
+        else {
+            dateField.text = SimpleDateFormat("MM/dd/yyyy", Locale.US).format(Calendar.getInstance().time)
         }
 
         buttonAdd = view.findViewById(R.id.doneButton)
@@ -78,11 +99,11 @@ class AddItemFragment : DialogFragment() {
             val nameT = nameField.text.toString().trim()
             val whereT = whereField.text.toString().trim()
             val kindT = kindField.text.toString().trim()
-            val rateT = rateField.text.toString().trim()
+            val dateT = dateField.text.toString().trim()
             val noteT = noteField.text.toString().trim()
 
-            if (nameT.isNotEmpty() and whereT.isNotEmpty() and kindT.isNotEmpty() and rateT.isNotEmpty() and noteT.isNotEmpty()) {
-                onItemAdded?.invoke(nameT, whereT, kindT, rateT.toInt(), noteT)
+            if (nameT.isNotEmpty() and whereT.isNotEmpty() and kindT.isNotEmpty() and dateT.isNotEmpty() and noteT.isNotEmpty()) {
+                onItemAdded?.invoke(nameT, whereT, kindT, dateT, noteT)
                 if ( picInt != null ) {
                     parentFragmentManager.apply {
                         findFragmentByTag("AddItemFragment")?.let {
@@ -118,6 +139,34 @@ class AddItemFragment : DialogFragment() {
             }
         }
         return view
+    }
+
+    private fun showDatePickerDialog(dateField: TextView) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireContext(), R.style.DatePickerDialog,
+            { _, selectedYear, selectedMonth, selectedDay ->
+
+                val monthF = if (selectedMonth + 1 > 10) {
+                    (selectedMonth + 1).toString()
+                }
+                else {
+                    "0${(selectedMonth + 1)}"
+                }
+                val dayF = if (selectedDay > 10) {
+                    selectedDay.toString()
+                }
+                else {
+                    "0${selectedDay}"
+                }
+                val selectedDate = "$monthF/$dayF/$selectedYear"
+                dateField.text = selectedDate
+            }, year, month, day)
+
+        datePickerDialog.show()
     }
 
     private fun openCamera() {

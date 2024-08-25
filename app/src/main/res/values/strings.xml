@@ -3,9 +3,9 @@
     <string name="welcome">Hey, Alex!</string>
     <string name="descPlaceholder">h</string>
     <string name="nameHint">What did you drink?</string>
-    <string name="whereHint">Where\'d you drink it?</string>
+    <string name="whereHint">Who made it?</string>
     <string name="kindHint">What kind of brew was it?</string>
-    <string name="rateHint">What would you rate it?</string>
+    <string name="dateHint">01/01/1970</string>
     <string name="notesHint">Any other notes?</string>
     <string name="done">Done!</string>
     <string name="edit">Edit</string>
@@ -16,8 +16,7 @@
     <string name="youSurePrompt2">You will never be able to recover it…</string>
 
     <string name="viewDatePrefix">Date recorded: </string>
-    <string name="viewWherePrefix">You drank this at: </string>
+    <string name="viewWhereSuffix">made this</string>
     <string name="viewKindPrefix">This drink is a: </string>
-    <string name="viewRatingPrefix">You rated this: </string>
     <string name="viewNotes">Your notes: </string>
 </resources>

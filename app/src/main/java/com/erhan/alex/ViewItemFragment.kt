@@ -18,11 +18,9 @@ import java.io.File
 class ViewItemFragment : DialogFragment() {
 
     private lateinit var imageField: ImageView
-    private lateinit var nameField: TextView
     private lateinit var whereField: TextView
     private lateinit var kindField: TextView
     private lateinit var dateField: TextView
-    private lateinit var rateField: TextView
     private lateinit var noteField: TextView
     private lateinit var buttonEdit: Button
     private lateinit var buttonDelete: Button
@@ -40,7 +38,7 @@ class ViewItemFragment : DialogFragment() {
         val name = arguments?.getString("name")
 
         whereField = view.findViewById(R.id.whereView)
-        val whereText = getString(R.string.viewWherePrefix)+" "+arguments?.getString("where")
+        val whereText = arguments?.getString("where")+" "+getString(R.string.viewWhereSuffix)
         val where = arguments?.getString("where")
         whereField.text = whereText
 
@@ -50,13 +48,9 @@ class ViewItemFragment : DialogFragment() {
         kindField.text = kindText
 
         dateField = view.findViewById(R.id.dateView)
-        val dateText = getString(R.string.viewDatePrefix)+" "+arguments?.getString("date")
+        val date = arguments?.getString("date")
+        val dateText = getString(R.string.viewDatePrefix)+" "+date
         dateField.text = dateText
-
-        rateField = view.findViewById(R.id.rateView)
-        val rating = arguments?.getInt("rating")
-        val ratingText = getString(R.string.viewRatingPrefix)+" "+rating.toString()
-        rateField.text = ratingText
 
         noteField = view.findViewById(R.id.noteView)
         val notes = arguments?.getString("notes")
@@ -74,17 +68,15 @@ class ViewItemFragment : DialogFragment() {
             bundleEdit.putString("name", name)
             bundleEdit.putString("where", where)
             bundleEdit.putString("kind", kind)
-            if (rating != null) {
-                bundleEdit.putInt("rating", rating)
-            }
+            bundleEdit.putString("date", date)
             bundleEdit.putString("notes", notes)
             if (pic != null) {
                 bundleEdit.putInt("pic", pic)
             }
             editItemFragment.arguments = bundleEdit
-            editItemFragment.onItemAdded = { nameT, whereT, kindT, rateT, noteT ->
+            editItemFragment.onItemAdded = { nameT, whereT, kindT, dateT, noteT ->
                 if (name != null) {
-                    editItem(nameT, whereT, kindT, rateT, noteT, "temporary")
+                    editItem(nameT, whereT, kindT, dateT, noteT)
                 }
             }
             activity?.let { it1 -> editItemFragment.show(it1.supportFragmentManager, "AddItemFragment") }
@@ -100,11 +92,11 @@ class ViewItemFragment : DialogFragment() {
         return view
     }
 
-    private fun editItem(newName: String, newWhere: String, newKind: String, newRating: Int, newNotes: String, newDate: String) {
+    private fun editItem(newName: String, newWhere: String, newKind: String, newDate: String, newNotes: String) {
         val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
         val id = arguments?.getInt("id")
         if (id != null) {
-            entryViewModel.update(id, newName, newWhere, newKind, newRating, newNotes, "temporary")
+            entryViewModel.update(id, newName, newWhere, newKind, newNotes, newDate)
         }
     }
 

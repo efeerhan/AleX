@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="0dp"
-            android:text="@string/viewWherePrefix"
+            android:text="@string/viewWhereSuffix"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:fontFamily="@font/ps"/>
@@ -48,16 +48,6 @@
             android:text="@string/viewKindPrefix"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:fontFamily="@font/ps"/>
-
-        <TextView
-            android:id="@+id/rateView"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="0dp"
-            android:textSize="20sp"
-            android:text="@string/viewRatingPrefix"
-            android:textColor="@color/black"
             android:fontFamily="@font/ps"/>
 
         <TextView

@@ -1,25 +1,16 @@
 package com.erhan.alex
 
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,14 +54,14 @@ class MainActivity : AppCompatActivity() {
         fab = findViewById(R.id.fab)
         fab.setOnClickListener {
             val addItemFragment = AddItemFragment()
-            addItemFragment.onItemAdded = { nameT, whereT, kindT, rateT, noteT ->
-                addItem(dao, nameT, whereT, kindT, rateT, noteT)
+            addItemFragment.onItemAdded = { nameT, whereT, kindT, dateT, noteT ->
+                addItem(dao, nameT, whereT, kindT, dateT, noteT)
             }
             addItemFragment.show(supportFragmentManager, "AddItemFragment")
         }
     }
 
-    private fun addItem(dao: EntryDao, name: String, where: String, kind: String, rating: Int, notes: String) {
+    private fun addItem(dao: EntryDao, name: String, where: String, kind: String, date: String, notes: String) {
         val maxPic = dao.getMaxPic()
         val newPic: Int = if ( dao.getCount() == 0 ) {
             0
@@ -81,12 +72,11 @@ class MainActivity : AppCompatActivity() {
             name = name,
             bwhere = where,
             kind = kind,
-            date = SimpleDateFormat("MM/dd/yyyy", Locale.US).format(Calendar.getInstance().time),
-            rating = rating,
+            date = date,
             notes = notes,
             pic = newPic))
-        Log.i("entryadded","Added entry $name $rating $notes $newPic")
-        val howMany = "You've had "+dao.getCount().toString()+" unique brewskis."
+        Log.i("entryadded","Added entry $name $date $notes $newPic")
+        val howMany = "You've had "+dao.getCount().toString()+" brewskis."
         val howManyView: TextView = findViewById(R.id.howMany)
         howManyView.text = howMany
     }

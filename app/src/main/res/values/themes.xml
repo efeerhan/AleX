@@ -11,5 +11,9 @@
         <item name="cornerSize">8dp</item>
     </style>
 
+    <style name="DatePickerDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorAccent">@color/main_back</item>
+    </style>
+
     <style name="Theme.AleX" parent="Base.Theme.AleX" />
 </resources>

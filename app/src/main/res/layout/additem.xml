@@ -9,11 +9,40 @@
     <ImageView
         android:id="@+id/imageField"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginVertical="24dp"
+        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:contentDescription="@string/descPlaceholder"
         android:src="@drawable/add_image"/>
+
+    <LinearLayout
+        android:id="@+id/dateLayout"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:id="@+id/calImage"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/descPlaceholder"
+            android:src="@drawable/calendar"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/dateField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autofillHints=""
+            android:text="@string/dateHint"
+            android:fontFamily="@font/ps"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/nameField"
@@ -46,19 +75,10 @@
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/rateField"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:autofillHints=""
-        android:hint="@string/rateHint"
-        android:fontFamily="@font/ps"
-        android:textColor="@color/black"
-        android:inputType="number" />
-
-    <EditText
         android:id="@+id/noteField"
+        android:gravity="top"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="120dp"
         android:autofillHints=""
         android:hint="@string/notesHint"
         android:fontFamily="@font/ps"

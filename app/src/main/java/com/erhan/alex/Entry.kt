@@ -11,7 +11,6 @@ data class Entry (
     var bwhere: String,
     var kind: String,
     var date: String,
-    var rating: Int,
     var notes: String,
     @ColumnInfo (name = "pic") var pic: Int
 )
