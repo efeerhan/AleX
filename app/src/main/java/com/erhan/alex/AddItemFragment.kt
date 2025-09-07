@@ -72,7 +72,7 @@ class AddItemFragment : DialogFragment() {
             showDatePickerDialog(dateField)
         }
 
-        // If editing
+        // Checks if picInt exists to determine if editing
         val picInt = arguments?.getInt("pic")
         if ( picInt != null ) {
             val file = File(context?.filesDir?.path, "images").resolve("IMG_$picInt.jpg")
@@ -88,7 +88,7 @@ class AddItemFragment : DialogFragment() {
             dateField.text = date
             noteField.setText(notes)
         }
-
+        //If new and not editing, set date field to today.
         else {
             dateField.text = SimpleDateFormat("MM/dd/yyyy", Locale.US).format(Calendar.getInstance().time)
         }
@@ -150,13 +150,13 @@ class AddItemFragment : DialogFragment() {
         val datePickerDialog = DatePickerDialog(requireContext(), R.style.DatePickerDialog,
             { _, selectedYear, selectedMonth, selectedDay ->
 
-                val monthF = if (selectedMonth + 1 > 10) {
+                val monthF = if (selectedMonth + 1 >= 10) {
                     (selectedMonth + 1).toString()
                 }
                 else {
                     "0${(selectedMonth + 1)}"
                 }
-                val dayF = if (selectedDay > 10) {
+                val dayF = if (selectedDay >= 10) {
                     selectedDay.toString()
                 }
                 else {

@@ -3,6 +3,7 @@ package com.erhan.alex
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ class Adapter( private val context: Context) :
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val numberView: TextView = itemView.findViewById(R.id.numberView)
         val textView: TextView = itemView.findViewById(R.id.textView)
     }
 
@@ -31,10 +33,13 @@ class Adapter( private val context: Context) :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val currentItem = entries[position]
         val file = File(context.filesDir?.path, "images").resolve("IMG_"+currentItem.pic+".jpg")
-
-        holder.imageView.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
+        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+        if ( bitmap != null ) {
+            holder.imageView.setImageBitmap(bitmap)
+        }
         holder.textView.text = currentItem.name
-        holder.textView.textSize = 24f
+        val formattedOrder = "${(position+1).toString()}. "
+        holder.numberView.text = formattedOrder
 
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
@@ -51,8 +56,19 @@ class Adapter( private val context: Context) :
         }
     }
 
+    private fun representDateSortably(date: String): String{
+        // OG is month day year
+        // 12/31/1970
+        // 0123456789
+        val month = date.substring(0, 2)
+        val day = date.substring(3,5)
+        val year = date.substring(6)
+        val reformat = "$year/$month/$day"
+        return reformat
+    }
+
     fun setEntries(newEntries: List<Entry>) {
-        entries = newEntries.sortedBy { it.date }
+        entries = newEntries.sortedBy { representDateSortably(it.date) }
         notifyDataSetChanged() // Use DiffUtil for better performance
     }
 

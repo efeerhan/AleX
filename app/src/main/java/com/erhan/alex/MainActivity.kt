@@ -51,9 +51,11 @@ class MainActivity : AppCompatActivity() {
             "pretty girl",
             "beautiful",
             "hot stuff",
+            "my Bort",
+            "the Alexsterrr",
             "\uD83C\uDF51"
         )
-        val randInt = (0..10).random()
+        val randInt = (0..names.size-1).random()
         val welcome = "Hey, "+names[randInt]+"!"
         hello.text = welcome
 
