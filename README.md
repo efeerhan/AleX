@@ -11,9 +11,8 @@ Well, I've got the solution for you. And I love you so much!
 
 # TODO
 - Spacing for multi line textviews
-- firebase storage?
-- Default image when none found
 - Export to .csv
+- Save images to external storage
 
 - ~~Local persistence~~
 - ~~Use custom image for entries~~
@@ -33,3 +32,4 @@ Well, I've got the solution for you. And I love you so much!
 	- ~~Spacing~~
 - ~~Info in header under Hey Alex!~~
 - ~~Date selection~~
+- ~~Default image when none found~~
