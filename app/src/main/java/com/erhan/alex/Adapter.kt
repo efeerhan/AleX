@@ -23,7 +23,6 @@ class Adapter( private val context: Context) :
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
         val numberView: TextView = itemView.findViewById(R.id.numberView)
         val textView: TextView = itemView.findViewById(R.id.textView)
-        val picIntView: TextView = itemView.findViewById(R.id.picIntView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
