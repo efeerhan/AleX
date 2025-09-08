@@ -23,6 +23,7 @@ class Adapter( private val context: Context) :
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
         val numberView: TextView = itemView.findViewById(R.id.numberView)
         val textView: TextView = itemView.findViewById(R.id.textView)
+        val picIntView: TextView = itemView.findViewById(R.id.picIntView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -31,14 +32,16 @@ class Adapter( private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        holder.imageView.setImageResource(R.drawable.placeholder);
         val currentItem = entries[position]
         val file = File(context.filesDir?.path, "images").resolve("IMG_"+currentItem.pic+".jpg")
         val bitmap = BitmapFactory.decodeFile(file.absolutePath)
         if ( bitmap != null ) {
             holder.imageView.setImageBitmap(bitmap)
         }
+        else Log.i("info", "no image for ${currentItem.name}")
         holder.textView.text = currentItem.name
-        val formattedOrder = "${(position+1).toString()}. "
+        val formattedOrder = "${(position+1)}. "
         holder.numberView.text = formattedOrder
 
         holder.itemView.setOnClickListener {
