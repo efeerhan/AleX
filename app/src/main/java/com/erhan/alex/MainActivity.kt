@@ -71,17 +71,27 @@ class MainActivity : AppCompatActivity() {
             entries?.let { entryAdapter.setEntries(it) }
         }
 
+        // If already signed in, reconcile local <-> cloud on app start.
+        if (AuthRepository.currentUser != null) {
+            entryViewModel.reconcile()
+        }
+
+        val accountButton = findViewById<android.widget.ImageButton>(R.id.accountButton)
+        accountButton.setOnClickListener {
+            AccountFragment().show(supportFragmentManager, "AccountFragment")
+        }
+
         fab = findViewById(R.id.fab)
         fab.setOnClickListener {
             val addItemFragment = AddItemFragment()
-            addItemFragment.onItemAdded = { nameT, whereT, kindT, dateT, noteT ->
-                addItem(dao, nameT, whereT, kindT, dateT, noteT)
+            addItemFragment.onItemAdded = { nameT, whereT, kindT, dateT, noteT, uuidT ->
+                addItem(dao, nameT, whereT, kindT, dateT, noteT, uuidT)
             }
             addItemFragment.show(supportFragmentManager, "AddItemFragment")
         }
     }
 
-    private fun addItem(dao: EntryDao, name: String, where: String, kind: String, date: String, notes: String) {
+    private fun addItem(dao: EntryDao, name: String, where: String, kind: String, date: String, notes: String, uuid: String) {
         val maxPic = dao.getMaxPic()
         val newPic: Int = if ( dao.getCount() == 0 ) {
             0
@@ -94,7 +104,9 @@ class MainActivity : AppCompatActivity() {
             kind = kind,
             date = date,
             notes = notes,
-            pic = newPic))
+            pic = newPic,
+            uuid = uuid,
+            updatedAt = System.currentTimeMillis()))
         Log.i("entryadded","Added entry $name $date $notes $newPic")
         val howMany = "You've logged "+dao.getCount().toString()+" brewskis."
         val howManyView: TextView = findViewById(R.id.howMany)

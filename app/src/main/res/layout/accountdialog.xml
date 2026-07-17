@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/dialog_fragment_background">
+
+    <TextView
+        android:id="@+id/accountTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:layout_marginTop="16dp"
+        android:text="@string/account"
+        android:fontFamily="@font/ps" />
+
+    <TextView
+        android:id="@+id/accountStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/accountSignedOut" />
+
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:text="@string/signInWithGoogle"
+        android:fontFamily="@font/ps"
+        android:backgroundTint="@color/fab_blue" />
+
+    <Button
+        android:id="@+id/restoreButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/restoreFromCloud"
+        android:fontFamily="@font/ps"
+        android:backgroundTint="@color/border_grey"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/signOutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/signOut"
+        android:fontFamily="@font/ps"
+        android:backgroundTint="@color/border_grey"
+        android:textColor="@color/black" />
+
+</LinearLayout>

@@ -14,7 +14,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import java.io.File
 
 class YouSureFragment : DialogFragment() {
 
@@ -32,8 +31,9 @@ class YouSureFragment : DialogFragment() {
 
         buttonYes.setOnClickListener {
             val id = arguments?.getInt("id")
-            if (id != null) {
-                deleteItem(id)
+            val uuid = arguments?.getString("uuid")
+            if (id != null && uuid != null) {
+                deleteItem(id, uuid)
             }
             parentFragmentManager.apply {
                 findFragmentByTag("YouSureFragment")?.let {
@@ -52,13 +52,12 @@ class YouSureFragment : DialogFragment() {
         return view
     }
 
-    private fun deleteItem(id: Int) {
+    private fun deleteItem(id: Int, uuid: String) {
         val db = AppDatabase.getDatabase(requireContext().applicationContext)
         val dao = db.entryDao()
-        val file = File(context?.filesDir?.path, "images").resolve("IMG_"+dao.getPicByID(id).toString()+".jpg")
-        file.delete()
+        // The local image file is deleted inside the repository (EntryRepository.delete).
         val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
-        entryViewModel.delete(id)
+        entryViewModel.delete(id, uuid)
         val howMany = "You've had "+dao.getCount().toString()+" unique brewskis."
         val howManyView: TextView? = activity?.findViewById<TextView>(R.id.howMany)
         howManyView?.text = howMany

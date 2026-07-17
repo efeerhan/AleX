@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class EntryViewModel(application: Application) : AndroidViewModel(application) {
@@ -12,7 +13,7 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         val entryDao = AppDatabase.getDatabase(application).entryDao()
-        repository = EntryRepository(entryDao)
+        repository = EntryRepository(entryDao, application)
         allEntries = repository.allEntries
     }
 
@@ -20,11 +21,23 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
         repository.insert(entry)
     }
 
-    fun update(id: Int, newName: String, newWhere: String, newKind: String, newNotes: String, newDate: String)  = viewModelScope.launch {
-        repository.update(id, newName, newWhere, newKind, newNotes, newDate)
+    fun update(id: Int, uuid: String, newName: String, newWhere: String, newKind: String, newNotes: String, newDate: String) = viewModelScope.launch {
+        repository.update(id, uuid, newName, newWhere, newKind, newNotes, newDate)
     }
 
-    fun delete(id: Int) = viewModelScope.launch {
-        repository.delete(id)
+    fun delete(id: Int, uuid: String) = viewModelScope.launch {
+        repository.delete(id, uuid)
+    }
+
+    fun onSignedIn() = viewModelScope.launch(Dispatchers.IO) {
+        repository.onSignedIn()
+    }
+
+    fun restoreFromCloud() = viewModelScope.launch(Dispatchers.IO) {
+        repository.restoreFromCloud()
+    }
+
+    fun reconcile() = viewModelScope.launch(Dispatchers.IO) {
+        repository.reconcile()
     }
 }

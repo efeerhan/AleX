@@ -33,7 +33,7 @@ class Adapter( private val context: Context) :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.imageView.setImageResource(R.drawable.placeholder);
         val currentItem = entries[position]
-        val file = File(context.filesDir?.path, "images").resolve("IMG_"+currentItem.pic+".jpg")
+        val file = File(context.filesDir?.path, "images").resolve("IMG_"+currentItem.uuid+".jpg")
         val bitmap = BitmapFactory.decodeFile(file.absolutePath)
         if ( bitmap != null ) {
             holder.imageView.setImageBitmap(bitmap)
@@ -52,6 +52,7 @@ class Adapter( private val context: Context) :
             bundle.putString("date", currentItem.date)
             bundle.putString("notes", currentItem.notes)
             bundle.putInt("pic", currentItem.pic)
+            bundle.putString("uuid", currentItem.uuid)
             val viewItemFragment = ViewItemFragment()
             viewItemFragment.arguments = bundle
             viewItemFragment.show((context as AppCompatActivity).supportFragmentManager, "ViewItemFragment")

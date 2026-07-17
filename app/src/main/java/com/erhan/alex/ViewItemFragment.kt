@@ -32,7 +32,8 @@ class ViewItemFragment : DialogFragment() {
         val view = inflater.inflate(R.layout.viewitem, container, false)
 
         imageField = view.findViewById(R.id.imageField)
-        val file = File(context?.filesDir?.path, "images").resolve("IMG_"+arguments?.getInt("pic")+".jpg")
+        val uuid = arguments?.getString("uuid")
+        val file = File(context?.filesDir?.path, "images").resolve("IMG_"+uuid+".jpg")
         imageField.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
 
         val name = arguments?.getString("name")
@@ -73,10 +74,11 @@ class ViewItemFragment : DialogFragment() {
             if (pic != null) {
                 bundleEdit.putInt("pic", pic)
             }
+            bundleEdit.putString("uuid", uuid)
             editItemFragment.arguments = bundleEdit
-            editItemFragment.onItemAdded = { nameT, whereT, kindT, dateT, noteT ->
+            editItemFragment.onItemAdded = { nameT, whereT, kindT, dateT, noteT, uuidT ->
                 if (name != null) {
-                    editItem(nameT, whereT, kindT, dateT, noteT)
+                    editItem(uuidT, nameT, whereT, kindT, dateT, noteT)
                 }
             }
             activity?.let { it1 -> editItemFragment.show(it1.supportFragmentManager, "AddItemFragment") }
@@ -85,6 +87,7 @@ class ViewItemFragment : DialogFragment() {
             val ysf = YouSureFragment()
             val bundleDelete = Bundle()
             bundleDelete.putInt("id", (arguments?.getInt("id") as Int))
+            bundleDelete.putString("uuid", uuid)
             ysf.arguments = bundleDelete
             activity?.let { it1 -> ysf.show(it1.supportFragmentManager, "YouSureFragment") }
         }
@@ -92,11 +95,11 @@ class ViewItemFragment : DialogFragment() {
         return view
     }
 
-    private fun editItem(newName: String, newWhere: String, newKind: String, newDate: String, newNotes: String) {
+    private fun editItem(uuid: String, newName: String, newWhere: String, newKind: String, newDate: String, newNotes: String) {
         val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
         val id = arguments?.getInt("id")
         if (id != null) {
-            entryViewModel.update(id, newName, newWhere, newKind, newNotes, newDate)
+            entryViewModel.update(id, uuid, newName, newWhere, newKind, newNotes, newDate)
         }
     }
 

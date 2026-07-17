@@ -1,19 +1,155 @@
 package com.erhan.alex
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
+import com.google.firebase.auth.FirebaseAuth
+import java.io.File
 
-class EntryRepository(private val entryDao: EntryDao) {
+class EntryRepository(private val entryDao: EntryDao, context: Context) {
+    private val appContext = context.applicationContext
     val allEntries: LiveData<List<Entry>> = entryDao.getAll()
+
+    private fun imageFile(uuid: String): File =
+        File(appContext.filesDir, "images").resolve("IMG_$uuid.jpg")
+
+    // ---- Local writes, each mirrored to the cloud (no-op when signed out) ----
 
     fun insert(entry: Entry) {
         entryDao.insertAll(entry)
+        CloudSyncRepository.pushEntry(entry)
+        CloudSyncRepository.pushImage(entry.uuid, imageFile(entry.uuid))
     }
 
-    fun update(id: Int, newName: String, newWhere: String, newKind: String, newNotes: String, newDate: String) {
-        entryDao.update(id, newName, newWhere, newKind, newNotes, newDate)
+    fun update(id: Int, uuid: String, newName: String, newWhere: String, newKind: String, newNotes: String, newDate: String) {
+        val now = System.currentTimeMillis()
+        entryDao.update(id, newName, newWhere, newKind, newNotes, newDate, now)
+        CloudSyncRepository.pushEntry(
+            Entry(
+                id = id,
+                name = newName,
+                bwhere = newWhere,
+                kind = newKind,
+                date = newDate,
+                notes = newNotes,
+                pic = 0, // not sent to Firestore
+                uuid = uuid,
+                updatedAt = now
+            )
+        )
+        // Re-push the image in case the photo was changed during the edit.
+        CloudSyncRepository.pushImage(uuid, imageFile(uuid))
     }
 
-    fun delete(id: Int) {
+    fun delete(id: Int, uuid: String) {
+        imageFile(uuid).delete()
         entryDao.delete(id)
+        CloudSyncRepository.deleteEntry(uuid)
+    }
+
+    // ---- Sign-in bootstrap / restore / reconcile ----
+
+    /**
+     * First action after a successful sign-in. If Room is empty this is a fresh
+     * install/new device -> pull everything down. Otherwise this is the first cloud
+     * enablement on an existing install -> push all local data up. Never blindly
+     * pulls over existing local data.
+     */
+    suspend fun onSignedIn() {
+        if (entryDao.getCount() == 0) {
+            restoreFromCloud()
+        } else {
+            bootstrapPushAll()
+        }
+        markInitialSyncDone()
+    }
+
+    /** Pull all remote entries + images into Room / internal storage. */
+    suspend fun restoreFromCloud() {
+        val remote = CloudSyncRepository.fetchAllRemoteEntries()
+        for ((uuid, fields) in remote) {
+            entryDao.upsert(entryFromFields(uuid, fields))
+            CloudSyncRepository.downloadImage(uuid, imageFile(uuid))
+        }
+    }
+
+    /** Push every local entry + image up to the cloud (fire-and-forget per item). */
+    private suspend fun bootstrapPushAll() {
+        for (entry in entryDao.getAllOnce()) {
+            CloudSyncRepository.pushEntry(entry)
+            CloudSyncRepository.pushImage(entry.uuid, imageFile(entry.uuid))
+        }
+    }
+
+    /**
+     * Three-way reconciliation, run at app start once the initial sync has completed.
+     * Handles deletions/failed-pushes that the fire-and-forget model can't retry inline.
+     */
+    suspend fun reconcile() {
+        if (!isInitialSyncDone()) return
+
+        val local = entryDao.getAllUuidTimestamps().associate { it.uuid to it.updatedAt }
+        val remote = CloudSyncRepository.fetchAllRemoteEntries()
+        val remoteTimestamps = remote.associate { (uuid, fields) ->
+            uuid to (fields["updatedAt"] as? Long ?: 0L)
+        }
+
+        // Remote-only -> deleted locally while offline -> delete remote.
+        for (uuid in remoteTimestamps.keys - local.keys) {
+            CloudSyncRepository.deleteEntry(uuid)
+        }
+
+        // Local-only -> an earlier push failed -> re-push.
+        val localOnly = local.keys - remoteTimestamps.keys
+        if (localOnly.isNotEmpty()) {
+            for (entry in entryDao.getAllOnce()) {
+                if (entry.uuid in localOnly) {
+                    CloudSyncRepository.pushEntry(entry)
+                    CloudSyncRepository.pushImage(entry.uuid, imageFile(entry.uuid))
+                }
+            }
+        }
+
+        // In both, remote newer -> defensive last-write-wins pull.
+        for ((uuid, fields) in remote) {
+            val localTs = local[uuid] ?: continue
+            val remoteTs = remoteTimestamps[uuid] ?: 0L
+            if (remoteTs > localTs) {
+                entryDao.upsert(entryFromFields(uuid, fields))
+                CloudSyncRepository.downloadImage(uuid, imageFile(uuid))
+            }
+        }
+    }
+
+    private fun entryFromFields(uuid: String, fields: Map<String, Any?>): Entry = Entry(
+        id = 0, // autogenerated; uuid unique index makes upsert idempotent
+        name = fields["name"] as? String ?: "",
+        bwhere = fields["bwhere"] as? String ?: "",
+        kind = fields["kind"] as? String ?: "",
+        date = fields["date"] as? String ?: "",
+        notes = fields["notes"] as? String ?: "",
+        pic = 0,
+        uuid = uuid,
+        updatedAt = fields["updatedAt"] as? Long ?: 0L
+    )
+
+    // ---- Initial-sync gate (prevents an interrupted restore from looking like mass deletion) ----
+
+    private fun prefs() =
+        appContext.getSharedPreferences("cloud_sync_prefs", Context.MODE_PRIVATE)
+
+    private fun flagKey(): String? {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return null
+        return "initial_sync_done_$uid"
+    }
+
+    private fun markInitialSyncDone() {
+        val key = flagKey() ?: return
+        prefs().edit().putBoolean(key, true).apply()
+    }
+
+    private fun isInitialSyncDone(): Boolean {
+        val key = flagKey() ?: return false
+        return prefs().getBoolean(key, false)
     }
 }

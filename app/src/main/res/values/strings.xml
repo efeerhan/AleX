@@ -20,4 +20,13 @@
     <string name="viewWhereSuffix">made this</string>
     <string name="viewKindPrefix">This drink is a: </string>
     <string name="viewNotes">Your notes: </string>
+
+    <string name="account">Cloud backup</string>
+    <string name="accountSignedOut">Not signed in — your entries are only on this phone.</string>
+    <string name="accountSignedInPrefix">Backed up as </string>
+    <string name="signInWithGoogle">Sign in with Google</string>
+    <string name="signOut">Sign out</string>
+    <string name="restoreFromCloud">Restore from cloud</string>
+    <string name="signInFailed">Sign-in failed. Please try again.</string>
+    <string name="restoreStarted">Restoring from cloud…</string>
 </resources>

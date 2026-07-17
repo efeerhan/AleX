@@ -35,6 +35,7 @@ import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.UUID
 
 class AddItemFragment : DialogFragment() {
 
@@ -48,7 +49,11 @@ class AddItemFragment : DialogFragment() {
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private val cameraRequestCode = 101
 
-    var onItemAdded: ((String, String, String, String, String) -> Unit)? = null
+    // Stable key for this entry: reused from arguments when editing, freshly generated when adding.
+    // Used for the local image filename and (via the callback) for the DB/cloud sync key.
+    private lateinit var entryUuid: String
+
+    var onItemAdded: ((String, String, String, String, String, String) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,10 +77,11 @@ class AddItemFragment : DialogFragment() {
             showDatePickerDialog(dateField)
         }
 
-        // Checks if picInt exists to determine if editing
-        val picInt = arguments?.getInt("pic")
-        if ( picInt != null ) {
-            val file = File(context?.filesDir?.path, "images").resolve("IMG_$picInt.jpg")
+        // Presence of a uuid in arguments means we're editing an existing entry; otherwise it's new.
+        val existingUuid = arguments?.getString("uuid")
+        entryUuid = existingUuid ?: UUID.randomUUID().toString()
+        if ( existingUuid != null ) {
+            val file = File(context?.filesDir?.path, "images").resolve("IMG_$existingUuid.jpg")
             imageField.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
             val name = arguments?.getString("name")
             val where = arguments?.getString("where")
@@ -103,8 +109,8 @@ class AddItemFragment : DialogFragment() {
             val noteT = noteField.text.toString().trim()
 
             if (nameT.isNotEmpty() and whereT.isNotEmpty() and kindT.isNotEmpty() and dateT.isNotEmpty() and noteT.isNotEmpty()) {
-                onItemAdded?.invoke(nameT, whereT, kindT, dateT, noteT)
-                if ( picInt != null ) {
+                onItemAdded?.invoke(nameT, whereT, kindT, dateT, noteT, entryUuid)
+                if ( existingUuid != null ) {
                     parentFragmentManager.apply {
                         findFragmentByTag("AddItemFragment")?.let {
                             beginTransaction().remove(it).commit()
@@ -175,24 +181,8 @@ class AddItemFragment : DialogFragment() {
     }
 
     private fun saveImageToInternalStorage(bitmap: Bitmap): String {
-        val db = AppDatabase.getDatabase(requireContext().applicationContext)
-        val dao = db.entryDao()
-        var maxPic = (dao.getMaxPic())
-        if ( dao.getCount() > 0 ) {
-            maxPic++
-        }
-        // Two cases: 1. new item being added 2. old item being modified. Need old pic value for edit.
-        val picInt = arguments?.getInt("pic")
-        val filename: String
-        if ( picInt == null ) {
-            // new
-            Log.i("entrySavePic","this is new and pic is $maxPic")
-            filename = "IMG_${maxPic}.jpg"
-        } else {
-            //edit
-            Log.i("entrySavePic","this is edit and pic is $picInt")
-            filename = "IMG_$picInt.jpg"
-        }
+        // Image filename is keyed by the entry's uuid (same key for new and edited entries).
+        val filename = "IMG_$entryUuid.jpg"
         var fileOutputStream: FileOutputStream? = null
         try {
             Files.createDirectories(Paths.get(context?.filesDir?.path+"/images/"));
