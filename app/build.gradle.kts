@@ -20,6 +20,22 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        // The app's original debug keystore (created 2021), kept in-repo-but-gitignored so a
+        // regenerated ~/.android/debug.keystore can't silently change the signing identity.
+        // Installed copies of AleX are signed with this key; signing with any other key makes
+        // in-place updates impossible (INSTALL_FAILED_UPDATE_INCOMPATIBLE).
+        getByName("debug") {
+            val originalKeystore = rootProject.file("keystore/debug.keystore")
+            if (originalKeystore.exists()) {
+                storeFile = originalKeystore
+                storePassword = "android"
+                keyAlias = "androiddebugkey"
+                keyPassword = "android"
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false

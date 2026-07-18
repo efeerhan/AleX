@@ -4,16 +4,20 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+
+private const val TAG = "AccountFragment"
 
 class AccountFragment : DialogFragment() {
 
@@ -42,7 +46,13 @@ class AccountFragment : DialogFragment() {
                     // Same shared instance MainActivity observes.
                     viewModel().onSignedIn()
                     refreshUi()
+                } catch (e: GetCredentialCancellationException) {
+                    // User backed out of the account chooser; not an error worth reporting.
+                    Log.i(TAG, "Sign-in cancelled by user")
                 } catch (e: Exception) {
+                    // Sign-in failures are almost always config (missing SHA-1 fingerprint,
+                    // stale google-services.json), so log the real cause rather than swallow it.
+                    Log.w(TAG, "Sign-in failed", e)
                     Toast.makeText(context, R.string.signInFailed, Toast.LENGTH_SHORT).show()
                 }
             }
