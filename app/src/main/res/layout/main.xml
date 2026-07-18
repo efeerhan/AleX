@@ -37,6 +37,8 @@
             android:text="@string/descPlaceholder"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AleX.BodyLarge"
+            android:fontFamily="sans-serif"
+            app:fontFamily="sans-serif"
             android:textColor="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -2,9 +2,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ============================================================
-         TYPE SCALE  ·  Editorial contrast
-         Display / headings  = sans   (Roboto), bold for weight
-         Everything else (body, buttons, inputs) = serif (Noto Serif)
+         TYPE SCALE  ·  Editorial contrast (per-element mix)
+         Display + Title = serif; Headline = sans; body/buttons/inputs = serif.
+         howMany ("you've logged…") is overridden to sans in main.xml.
 
          IMPORTANT: both `fontFamily` (AppCompat, no prefix) AND
          `android:fontFamily` are set. AppCompatTextView reads the
@@ -15,9 +15,9 @@
          ============================================================ -->
 
     <style name="TextAppearance.AleX.Display" parent="TextAppearance.Material3.HeadlineLarge">
-        <item name="fontFamily">sans-serif</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">serif</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textFontWeight">600</item>
         <item name="android:textSize">34sp</item>
         <item name="android:letterSpacing">-0.015</item>
         <item name="android:textColor">@color/ink</item>
@@ -33,8 +33,8 @@
     </style>
 
     <style name="TextAppearance.AleX.Title" parent="TextAppearance.Material3.TitleLarge">
-        <item name="fontFamily">sans-serif</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontFamily">serif</item>
+        <item name="android:fontFamily">serif</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/ink</item>
