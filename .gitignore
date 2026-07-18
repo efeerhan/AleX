@@ -16,6 +16,6 @@ local.properties
 *.jks
 *.keystore
 
-# Firebase — contains project identifiers; keep out of the repo per project decision
+# Firebase contains project identifiers; keep out of the repo per project decision
 google-services.json
 app/google-services.json

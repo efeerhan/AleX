@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:padding="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="@dimen/space_sm"
     android:background="@drawable/card"
-    android:elevation="2dp">
+    android:elevation="2dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_md">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="@dimen/thumbnail"
+        android:layout_height="@dimen/thumbnail"
+        android:layout_marginEnd="@dimen/space_md"
         android:contentDescription="@string/descPlaceholder"
-        app:shapeAppearanceOverlay="@style/roundedImageView"
-        android:src="@drawable/placeholder"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder"
+        app:shapeAppearanceOverlay="@style/roundedImageView" />
 
     <TextView
         android:id="@+id/numberView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/space_xs"
         android:text="@string/ordernumber"
-        android:fontFamily="@font/ps"
-        android:textColor="@color/black"
-        android:textSize="24sp"/>
+        android:textAppearance="@style/TextAppearance.AleX.Title"
+        android:textColor="@color/ink_muted" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/app_name"
-        android:fontFamily="@font/ps"
-        android:textColor="@color/black"
-        android:textSize="24sp"/>
+        android:textAppearance="@style/TextAppearance.AleX.Title" />
 
 </LinearLayout>

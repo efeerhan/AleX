@@ -17,12 +17,12 @@
     <string name="youSurePrompt2">You will never be able to recover it…</string>
 
     <string name="viewDatePrefix">Date recorded: </string>
-    <string name="viewWhereSuffix">made this</string>
-    <string name="viewKindPrefix">This drink is a: </string>
+    <string name="viewWhereSuffix">made this.</string>
+    <string name="viewKindPrefix">This drink is a </string>
     <string name="viewNotes">Your notes: </string>
 
     <string name="account">Cloud backup</string>
-    <string name="accountSignedOut">Not signed in — your entries are only on this phone.</string>
+    <string name="accountSignedOut">Not signed in. Your entries are only on this phone.</string>
     <string name="accountSignedInPrefix">Backed up as </string>
     <string name="signInWithGoogle">Sign in with Google</string>
     <string name="signOut">Sign out</string>

@@ -82,7 +82,11 @@ class AddItemFragment : DialogFragment() {
         entryUuid = existingUuid ?: UUID.randomUUID().toString()
         if ( existingUuid != null ) {
             val file = File(context?.filesDir?.path, "images").resolve("IMG_$existingUuid.jpg")
-            imageField.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
+            val savedBitmap = BitmapFactory.decodeFile(file.absolutePath)
+            if (savedBitmap != null) {
+                imageField.setImageBitmap(savedBitmap)
+                imageField.scaleType = ImageView.ScaleType.CENTER_CROP
+            }
             val name = arguments?.getString("name")
             val where = arguments?.getString("where")
             val kind = arguments?.getString("kind")
@@ -132,6 +136,7 @@ class AddItemFragment : DialogFragment() {
                 val imageBitmap = result.data?.extras?.get("data") as Bitmap
                 saveImageToInternalStorage(imageBitmap)
                 imageField.setImageBitmap(imageBitmap)
+                imageField.scaleType = ImageView.ScaleType.CENTER_CROP
             }
         }
 

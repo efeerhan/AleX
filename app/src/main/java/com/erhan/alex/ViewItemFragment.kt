@@ -44,7 +44,7 @@ class ViewItemFragment : DialogFragment() {
         whereField.text = whereText
 
         kindField = view.findViewById(R.id.kindView)
-        val kindText = getString(R.string.viewKindPrefix)+" "+arguments?.getString("kind")
+        val kindText = getString(R.string.viewKindPrefix)+" "+arguments?.getString("kind")+"."
         val kind = arguments?.getString("kind")
         kindField.text = kindText
 

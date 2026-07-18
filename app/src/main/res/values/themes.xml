@@ -1,18 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.AleX" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@color/main_back</item>
-        <item name="android:navigationBarColor">@color/main_back</item>
+
+    <!-- Shared foundation: all design tokens live here so the day and night
+         Base.Theme.AleX variants inherit an identical look. -->
+    <style name="Theme.AleX.Foundation" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Color roles -->
+        <!-- Primary = amber accent (drives FAB, buttons, controls) -->
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorOnPrimary">@color/ink</item>
+        <item name="colorPrimaryContainer">@color/accent</item>
+        <item name="colorOnPrimaryContainer">@color/ink</item>
+
+        <!-- Secondary = turquoise brand -->
+        <item name="colorSecondary">@color/brand</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/brand_container</item>
+        <item name="colorOnSecondaryContainer">@color/white</item>
+
+        <!-- Surfaces & neutrals -->
+        <item name="android:colorBackground">@color/brand</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/ink</item>
+        <item name="colorSurfaceVariant">@color/surface_muted</item>
+        <item name="colorOnSurfaceVariant">@color/ink_muted</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <!-- Text defaults -->
+        <item name="android:textColorPrimary">@color/ink</item>
+        <item name="android:textColorSecondary">@color/ink_muted</item>
+        <item name="android:textColorHint">@color/ink_muted</item>
+        <!-- NOTE: do NOT set android:fontFamily here. A theme-level fontFamily
+             overrides the fontFamily declared in a textAppearance, which would
+             flatten the serif headings back to sans. Fonts are owned per-style
+             in styles.xml instead. sans-serif is the platform default anyway. -->
+
+        <!-- Shape scale for Material components -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.AleX.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.AleX.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.AleX.Large</item>
+
+        <!-- Default widget styles so plain <Button>/<EditText> pick up the system -->
+        <item name="materialButtonStyle">@style/Widget.AleX.Button</item>
+        <item name="android:editTextStyle">@style/Widget.AleX.EditText</item>
+        <item name="editTextStyle">@style/Widget.AleX.EditText</item>
+
+        <!-- System bars: keep the turquoise brand look -->
+        <item name="android:statusBarColor">@color/brand</item>
+        <item name="android:navigationBarColor">@color/brand</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowTranslucentStatus">false</item>
     </style>
 
-    <style name="roundedImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">8dp</item>
-    </style>
+    <!-- Day variant -->
+    <style name="Base.Theme.AleX" parent="Theme.AleX.Foundation" />
 
+    <!-- Date picker keeps the amber accent -->
     <style name="DatePickerDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorAccent">@color/main_back</item>
+        <item name="colorAccent">@color/accent</item>
     </style>
 
     <style name="Theme.AleX" parent="Base.Theme.AleX" />

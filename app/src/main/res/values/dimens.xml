@@ -1,3 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
+        Spacing scale (4dp base grid). Use these instead of ad-hoc margins/padding
+        so vertical rhythm and gutters stay consistent across every screen.
+    -->
+    <dimen name="space_2xs">2dp</dimen>
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_sm">8dp</dimen>
+    <dimen name="space_md">12dp</dimen>
+    <dimen name="space_lg">16dp</dimen>
+    <dimen name="space_xl">24dp</dimen>
+    <dimen name="space_2xl">32dp</dimen>
+    <dimen name="space_3xl">48dp</dimen>
+    <dimen name="space_4xl">64dp</dimen>
+
+    <!-- Corner radius scale -->
+    <dimen name="radius_sm">8dp</dimen>
+    <dimen name="radius_md">16dp</dimen>
+    <dimen name="radius_lg">24dp</dimen>
+    <dimen name="radius_pill">100dp</dimen>
+
+    <!-- Component sizing -->
+    <dimen name="touch_target">48dp</dimen>
+    <dimen name="thumbnail">60dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 </resources>

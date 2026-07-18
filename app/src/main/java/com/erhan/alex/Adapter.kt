@@ -40,7 +40,7 @@ class Adapter( private val context: Context) :
         }
         else Log.i("info", "no image for ${currentItem.name}")
         holder.textView.text = currentItem.name
-        val formattedOrder = "${(position+1)}. "
+        val formattedOrder = "${entries.size - position}. "
         holder.numberView.text = formattedOrder
 
         holder.itemView.setOnClickListener {
@@ -71,7 +71,7 @@ class Adapter( private val context: Context) :
     }
 
     fun setEntries(newEntries: List<Entry>) {
-        entries = newEntries.sortedBy { representDateSortably(it.date) }
+        entries = newEntries.sortedByDescending { representDateSortably(it.date) }
         notifyDataSetChanged() // Use DiffUtil for better performance
     }
 

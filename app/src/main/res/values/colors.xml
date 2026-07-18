@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <!--
+        AleX color tokens.
+        Semantic names only. do not reference raw hex in layouts.
+        The turquoise brand color (#169873) is preserved as the app background.
+    -->
+
+    <!-- Brand: sea-green / turquoise (kept) -->
+    <color name="brand">#FF169873</color>
+    <color name="brand_dark">#FF0E7C5E</color>       <!-- system bars, pressed states -->
+    <color name="brand_container">#FF1FB088</color>   <!-- tonal surfaces on brand -->
+
+    <!-- Accent: warm amber/gold -->
+    <color name="accent">#FFF4A93C</color>
+    <color name="accent_dark">#FFDB8E1E</color>       <!-- pressed / ripple -->
+
+    <!-- Neutrals -->
+    <color name="surface">#FFFFFFFF</color>           <!-- cards, dialogs -->
+    <color name="surface_muted">#FFF3F1EC</color>     <!-- input fields, secondary buttons -->
+    <color name="ink">#FF201C17</color>               <!-- primary text (warm near-black) -->
+    <color name="ink_muted">#FF6F6A62</color>         <!-- secondary text, hints -->
+    <color name="outline">#FFE0DDD6</color>           <!-- borders, dividers -->
+
     <color name="white">#FFFFFFFF</color>
-    <color name="diagnostic_pink">#FF8DA1</color>
-    <color name="border_grey">#C2C4C4</color>
-<!--    <color name="fab_blue">#58889B</color>-->
-    <color name="fab_blue">#788DCC</color>
-<!--    <color name="main_back">#38827b</color>-->
-    <color name="main_back">#169873</color>
+    <color name="black">#FF201C17</color>
 </resources>
