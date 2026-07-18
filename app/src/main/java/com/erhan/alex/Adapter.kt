@@ -40,7 +40,10 @@ class Adapter( private val context: Context) :
         }
         else Log.i("info", "no image for ${currentItem.name}")
         holder.textView.text = currentItem.name
-        val formattedOrder = "${entries.size - position}. "
+        // Entries logged after the Z Flip loss continue from 311, skipping the 153 lost records.
+        val displayNumber = (entries.size - position) +
+                if (isAfterLoss(currentItem.date)) LOST_ENTRIES else 0
+        val formattedOrder = "$displayNumber. "
         holder.numberView.text = formattedOrder
 
         holder.itemView.setOnClickListener {
@@ -57,17 +60,6 @@ class Adapter( private val context: Context) :
             viewItemFragment.arguments = bundle
             viewItemFragment.show((context as AppCompatActivity).supportFragmentManager, "ViewItemFragment")
         }
-    }
-
-    private fun representDateSortably(date: String): String{
-        // OG is month day year
-        // 12/31/1970
-        // 0123456789
-        val month = date.substring(0, 2)
-        val day = date.substring(3,5)
-        val year = date.substring(6)
-        val reformat = "$year/$month/$day"
-        return reformat
     }
 
     fun setEntries(newEntries: List<Entry>) {

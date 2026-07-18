@@ -105,6 +105,23 @@ object CloudSyncRepository {
         }
     }
 
+    /**
+     * Returns the set of uuids that actually have an image object in Storage, or null if the
+     * listing failed. Null (not an empty set) is deliberate: a failed listing must make callers
+     * skip the check, never conclude "nothing is backed up" and re-upload everything.
+     */
+    suspend fun fetchRemoteImageUuids(): Set<String>? {
+        val uid = uid() ?: return null
+        return try {
+            FirebaseStorage.getInstance().reference.child("users/$uid/images")
+                .listAll().await()
+                .items.map { it.name.removeSuffix(".jpg") }.toSet()
+        } catch (e: Exception) {
+            Log.w(TAG, "fetchRemoteImageUuids failed", e)
+            null
+        }
+    }
+
     /** Downloads the remote image for [uuid] into [destFile]; no-ops if it doesn't exist. */
     suspend fun downloadImage(uuid: String, destFile: File) {
         val uid = uid() ?: return

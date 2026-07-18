@@ -119,6 +119,18 @@ class EntryRepository(private val entryDao: EntryDao, context: Context) {
                 CloudSyncRepository.downloadImage(uuid, imageFile(uuid))
             }
         }
+
+        // Catch entries whose doc pushed but whose image push failed (equal timestamps, so the
+        // branches above never touch them). Re-push any local image missing from Storage.
+        val remoteImages = CloudSyncRepository.fetchRemoteImageUuids()
+        if (remoteImages != null) {
+            for (entry in entryDao.getAllOnce()) {
+                val file = imageFile(entry.uuid)
+                if (file.exists() && entry.uuid !in remoteImages) {
+                    CloudSyncRepository.pushImage(entry.uuid, file)
+                }
+            }
+        }
     }
 
     private fun entryFromFields(uuid: String, fields: Map<String, Any?>): Entry = Entry(

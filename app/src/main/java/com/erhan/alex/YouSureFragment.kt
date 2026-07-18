@@ -58,7 +58,7 @@ class YouSureFragment : DialogFragment() {
         // The local image file is deleted inside the repository (EntryRepository.delete).
         val entryViewModel = ViewModelProvider(this)[EntryViewModel::class.java]
         entryViewModel.delete(id, uuid)
-        val howMany = "You've had "+dao.getCount().toString()+" unique brewskis."
+        val howMany = "You've had "+(dao.getCount() + LOST_ENTRIES).toString()+" unique brewskis."
         val howManyView: TextView? = activity?.findViewById<TextView>(R.id.howMany)
         howManyView?.text = howMany
         if ( howManyView == null ) {

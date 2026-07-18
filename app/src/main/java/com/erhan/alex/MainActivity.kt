@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         val db by lazy { AppDatabase.getDatabase(this) }
         val dao = db.entryDao()
 
-        val howMany = "You've logged "+dao.getCount().toString()+" brewskis."
+        val howMany = "You've logged "+(dao.getCount() + LOST_ENTRIES).toString()+" brewskis."
         val howManyView: TextView = findViewById(R.id.howMany)
         howManyView.text = howMany
 
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             uuid = uuid,
             updatedAt = System.currentTimeMillis()))
         Log.i("entryadded","Added entry $name $date $notes $newPic")
-        val howMany = "You've logged "+dao.getCount().toString()+" brewskis."
+        val howMany = "You've logged "+(dao.getCount() + LOST_ENTRIES).toString()+" brewskis."
         val howManyView: TextView = findViewById(R.id.howMany)
         howManyView.text = howMany
     }
