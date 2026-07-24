@@ -11,10 +11,18 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: EntryRepository
     val allEntries: LiveData<List<Entry>>
 
+    /** Entries not yet confirmed in the cloud; drives the main-screen backup indicator. */
+    val pendingPushCount: LiveData<Int> = PendingPushes.count
+
     init {
         val entryDao = AppDatabase.getDatabase(application).entryDao()
         repository = EntryRepository(entryDao, application)
         allEntries = repository.allEntries
+    }
+
+    /** Bootstrap-or-reconcile, run once per app start. Safe to call when signed out. */
+    fun onAppStart() = viewModelScope.launch(Dispatchers.IO) {
+        repository.onAppStart()
     }
 
     fun insert(entry: Entry) = viewModelScope.launch {

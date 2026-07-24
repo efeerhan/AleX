@@ -19,6 +19,13 @@ fun representDateSortably(date: String): String {
     return "$year/$month/$day"
 }
 
+/**
+ * [representDateSortably] for untrusted input (e.g. a cloud doc's date field), which indexes
+ * blindly and would throw on a short string. Unparseable dates sort first, i.e. oldest.
+ */
+fun sortableDateOrEmpty(date: String?): String =
+    if (date != null && date.length >= 8) representDateSortably(date) else ""
+
 /** True if [date] falls after the last surviving pre-loss entry. */
 fun isAfterLoss(date: String): Boolean =
     representDateSortably(date) > representDateSortably(LOST_CUTOFF_DATE)

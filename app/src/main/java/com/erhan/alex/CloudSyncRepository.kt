@@ -46,13 +46,25 @@ object CloudSyncRepository {
 
     // ---- Fire-and-forget writes ----
 
-    fun pushEntry(entry: Entry) {
-        val uid = uid() ?: return
+    /**
+     * [onResult] reports whether the write actually reached Firestore. Callers use it to keep
+     * [PendingPushes] honest — in particular the signed-out case below, which does no work at
+     * all and previously left no evidence that an entry had gone un-backed-up.
+     */
+    fun pushEntry(entry: Entry, onResult: (Boolean) -> Unit = {}) {
+        val uid = uid()
+        if (uid == null) {
+            Log.i(TAG, "pushEntry skipped for ${entry.uuid}: signed out")
+            onResult(false)
+            return
+        }
         ioScope.launch {
             try {
                 entriesCollection(uid).document(entry.uuid).set(entry.toFirestoreMap()).await()
+                onResult(true)
             } catch (e: Exception) {
                 Log.w(TAG, "pushEntry failed for ${entry.uuid}", e)
+                onResult(false)
             }
         }
     }

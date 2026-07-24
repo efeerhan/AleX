@@ -7,6 +7,7 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -21,6 +22,21 @@ object AuthRepository {
 
     val currentUser: FirebaseUser?
         get() = Firebase.auth.currentUser
+
+    /**
+     * Calls [onChange] on every sign-in/sign-out transition, including a token expiring
+     * underneath the user — which is precisely the case that silently stopped backups before,
+     * with nothing on screen changing. Returns the listener so callers can unregister it.
+     */
+    fun observeAuthState(onChange: () -> Unit): FirebaseAuth.AuthStateListener {
+        val listener = FirebaseAuth.AuthStateListener { onChange() }
+        Firebase.auth.addAuthStateListener(listener)
+        return listener
+    }
+
+    fun stopObservingAuthState(listener: FirebaseAuth.AuthStateListener) {
+        Firebase.auth.removeAuthStateListener(listener)
+    }
 
     /** Launches the Google account chooser and signs the user into Firebase. Throws on failure. */
     suspend fun signIn(activity: Activity): FirebaseUser {

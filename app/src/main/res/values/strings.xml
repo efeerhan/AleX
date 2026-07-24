@@ -29,4 +29,12 @@
     <string name="restoreFromCloud">Restore from cloud</string>
     <string name="signInFailed">Sign-in failed. Please try again.</string>
     <string name="restoreStarted">Restoring from cloud…</string>
+
+    <!-- Main-screen backup indicator. Sync used to fail with nothing on screen changing. -->
+    <string name="syncSignedOut">⚠ Not backed up — tap the cloud icon to sign in</string>
+    <string name="syncUpToDate">✓ Backed up</string>
+    <plurals name="syncPending">
+        <item quantity="one">⚠ %d entry not backed up yet</item>
+        <item quantity="other">⚠ %d entries not backed up yet</item>
+    </plurals>
 </resources>

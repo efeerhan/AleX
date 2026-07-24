@@ -41,6 +41,20 @@
             app:fontFamily="sans-serif"
             android:textColor="@color/white" />
 
+        <!-- Backup state. Visible on the main screen because a silent sync failure is how a
+             week of entries went un-backed-up without anyone noticing. -->
+        <TextView
+            android:id="@+id/syncStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_md"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AleX.Caption"
+            android:fontFamily="sans-serif"
+            app:fontFamily="sans-serif"
+            android:textColor="@color/accent"
+            tools:text="⚠ 3 entries not backed up yet" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle"
             android:layout_width="match_parent"

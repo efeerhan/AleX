@@ -63,7 +63,13 @@ class Adapter( private val context: Context) :
     }
 
     fun setEntries(newEntries: List<Entry>) {
-        entries = newEntries.sortedByDescending { representDateSortably(it.date) }
+        // Dates are day-granular, so same-day entries need an explicit tiebreak: without one the
+        // stable sort leaves them oldest-first, and the (size - position) numbering above then
+        // hands the day's highest number to its oldest entry. id ascends with insertion, so
+        // descending id puts the most recent entry of a day on top, where its number belongs.
+        entries = newEntries.sortedWith(
+            compareByDescending<Entry> { representDateSortably(it.date) }.thenByDescending { it.id }
+        )
         notifyDataSetChanged() // Use DiffUtil for better performance
     }
 
