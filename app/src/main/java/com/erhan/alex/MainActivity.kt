@@ -57,6 +57,13 @@ class MainActivity : AppCompatActivity() {
             "hot stuff",
             "my Bort",
             "the Alexsterrr",
+            "Babungus",
+            "beabor",
+            "booba",
+            "schmiddy",
+            "freak sauce",
+            "gumbus",
+            "[REDACTED]",
             "\uD83C\uDF51"
         )
         val randInt = (0..names.size-1).random()
