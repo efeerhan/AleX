@@ -18,6 +18,7 @@ import java.io.File
 class ViewItemFragment : DialogFragment() {
 
     private lateinit var imageField: ImageView
+    private lateinit var nameField: TextView
     private lateinit var whereField: TextView
     private lateinit var kindField: TextView
     private lateinit var dateField: TextView
@@ -37,6 +38,8 @@ class ViewItemFragment : DialogFragment() {
         imageField.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
 
         val name = arguments?.getString("name")
+        nameField = view.findViewById(R.id.nameView)
+        nameField.text = name
 
         whereField = view.findViewById(R.id.whereView)
         val whereText = arguments?.getString("where")+" "+getString(R.string.viewWhereSuffix)

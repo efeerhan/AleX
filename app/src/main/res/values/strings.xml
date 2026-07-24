@@ -30,6 +30,11 @@
     <string name="signInFailed">Sign-in failed. Please try again.</string>
     <string name="restoreStarted">Restoring from cloud…</string>
 
+    <!-- Ghost row standing in for the entries lost with the Z Flip. Range is passed in rather
+         than hardcoded so it stays true if the surviving entry count ever changes. -->
+    <string name="memorialTitle">In loving memory</string>
+    <string name="memorialRange">Entries %1$d–%2$d · lost with the Z Flip</string>
+
     <!-- Main-screen backup indicator. Sync used to fail with nothing on screen changing. -->
     <string name="syncSignedOut">⚠ Not backed up — tap the cloud icon to sign in</string>
     <string name="syncUpToDate">✓ Backed up</string>

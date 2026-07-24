@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Stands in for the 153 entries lost with the Z Flip. Sits at the seam in the list where
+    the numbering jumps from 311 back down to 157. Not clickable: there is nothing to open.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_sm"
+    android:background="@drawable/card_memorial"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/space_md"
+    android:paddingVertical="@dimen/space_lg">
+
+    <TextView
+        android:id="@+id/memorialTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/memorialTitle"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AleX.Title"
+        android:textColor="@color/ink_muted"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/memorialRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AleX.Caption"
+        tools:text="Entries 158–310 · lost with the Z Flip" />
+
+</LinearLayout>

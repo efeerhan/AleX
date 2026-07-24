@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_fragment_background"
@@ -24,6 +25,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.AleX.Image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Sits tight under the photo so the two read as one unit, with the existing space_xl
+         below separating the pair from the detail lines. -->
+    <TextView
+        android:id="@+id/nameView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AleX.Title"
+        tools:text="Cold Snap" />
 
     <LinearLayout
         android:layout_width="match_parent"
